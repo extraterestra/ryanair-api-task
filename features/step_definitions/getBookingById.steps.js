@@ -1,14 +1,15 @@
 const { Given, When, Then, Before, setWorldConstructor } = require('@cucumber/cucumber');
 const { expect } = require('chai');
 const ApiWorld = require('../support/world');
+const { error, booking } = require('../../models/dataSchemas');
 
 setWorldConstructor(ApiWorld);
 
 // Constants for validation
-const BOOKING_KEYS = ['id', 'date', 'destination', 'origin', 'userId'];
-const ERROR_KEYS = ['message', 'errors'];
-const ERROR_DETAIL_KEYS = ['message', 'location'];
-const LOCATION_KEYS = ['in', 'name', 'docPath', 'path'];
+const BOOKING_KEYS = booking.keys;
+const ERROR_KEYS = error.keys;
+const ERROR_DETAIL_KEYS = error.detailKeys;
+const LOCATION_KEYS = error.locationKeys;
 
 // Background steps - no longer needed as config handles initialization
 
