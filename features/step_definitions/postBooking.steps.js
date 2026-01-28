@@ -19,7 +19,7 @@ Given('I prepare a booking request with the following data:', function(dataTable
   const rowsHash = dataTable.rowsHash();
   
   this.bookingRequest = {
-    date: rowsHash.date,
+    date: rowsHash.date === 'undefined' ? undefined : rowsHash.date,
     destination: rowsHash.destination,
     origin: rowsHash.origin,
     userId: parseInt(rowsHash.userId, 10)

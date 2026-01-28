@@ -28,8 +28,9 @@ Feature: Get Bookings by User ID and Date
     Then the response status should be "<statusCode>"
     And the error response fields should correspond to the schema
 
+    # cases with invalid userID and date return 200 instead of expected errors, supposed to be bug
     Examples: Invalid user ID and date scenarios
       | userID    | date         | statusCode | 
-      | invalid   | 2022-01-01   | 400        | 
+      | invalid   | 2022-01-01   | 400        |    
       | 99999     | 2024-01-01   | 404        | 
       | 1         | invalid-date | 400        | 

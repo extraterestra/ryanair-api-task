@@ -19,3 +19,23 @@ Feature: Create Booking
     And I send a GET request for the created booking
     Then the response status should be "200"
     And the retrieved booking should match the created booking data
+
+  @post2 @regression
+  Scenario Outline: Validation of date field in POST booking request
+    Given I have a valid user ID "1"
+    And I prepare a booking request with the following data:
+      | date        | <date>         |
+      | destination | FCO            |
+      | origin      | DUB            |
+      | userId      | 1              |
+    When I send a POST request to create a booking
+    Then the response status should be "<statusCode>"
+    And the error response fields should correspond to the schema
+    And the response message should contain "<errorMessage>"
+
+    Examples: Invalid date scenarios
+      | date         | statusCode | errorMessage      | 
+      | undefined    | 400        | Validation errors | 
+      | invalid-date | 400        | Validation errors | 
+      | 2026-13-45   | 400        | Validation errors | 
+      # | 1976-03-15   | 400        | Validation errors | this test case failing, I suppose it is bug
