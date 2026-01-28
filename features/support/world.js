@@ -14,26 +14,38 @@ class ApiWorld extends World {
     this.error = null;
   }
 
-  async makeRequest(method, path) {
+  async makeRequest(method, path, body = null) {
     try {
       const url = `${this.baseUrl}${this.endpoint}${path}`;
       const headers = {
         'Accept': 'application/json',
       };
 
+      // Add Content-Type header for POST/PUT requests with body
+      if (body && (method === 'POST' || method === 'PUT')) {
+        headers['Content-Type'] = 'application/json';
+      }
+
       // Log request details
-      logger.logRequest(method, url, headers);
+      logger.logRequest(method, url, headers, body);
 
       // Generate and log curl command
-      const curl = curlGenerator.generate(method, url, headers);
+      const curl = curlGenerator.generate(method, url, headers, body);
       logger.logCurl(curl);
 
-      this.response = await axios({
+      const config = {
         method,
         url,
         headers,
         validateStatus: () => true, // Don't throw on any status code
-      });
+      };
+
+      // Add data for POST/PUT requests
+      if (body && (method === 'POST' || method === 'PUT')) {
+        config.data = body;
+      }
+
+      this.response = await axios(config);
 
       // Log response details
       logger.logResponse(
