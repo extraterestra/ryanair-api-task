@@ -1,0 +1,8 @@
+
+
+
+  Booking API
+    ✔ GET /booking/:id should return a specific booking (108ms)
+
+
+  1 passing (110ms)
