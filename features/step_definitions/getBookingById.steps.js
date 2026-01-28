@@ -10,14 +10,7 @@ const ERROR_KEYS = ['message', 'errors'];
 const ERROR_DETAIL_KEYS = ['message', 'location'];
 const LOCATION_KEYS = ['in', 'name', 'docPath', 'path'];
 
-// Background steps
-Given('the API endpoint is available at {string}', function(baseUrl) {
-  this.baseUrl = baseUrl;
-});
-
-Given('the API endpoint is {string}', function(endpoint) {
-  this.endpoint = endpoint;
-});
+// Background steps - no longer needed as config handles initialization
 
 // Given steps - Setup booking ID
 Given('I have a valid booking ID {string}', function(id) {

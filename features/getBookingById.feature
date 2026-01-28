@@ -3,10 +3,6 @@ Feature: Get Booking by ID
   I want to retrieve booking information by booking ID
   So that I can view my booking details
 
-  Background:
-    Given the API endpoint is available at "http://127.0.0.1:8900"
-    And the API endpoint is "/booking"
-
   @smoke @regression
   Scenario: Successfully retrieve an existing booking
     Given I have a valid booking ID "1"

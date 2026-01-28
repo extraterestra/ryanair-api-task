@@ -1,13 +1,14 @@
 const { World } = require('@cucumber/cucumber');
 const axios = require('axios');
+const apiConfig = require('../../config/apiConfig');
 
 class ApiWorld extends World {
   constructor(options) {
     super(options);
     this.response = null;
     this.bookingId = null;
-    this.baseUrl = null;
-    this.endpoint = null;
+    this.baseUrl = apiConfig.api.baseUrl;
+    this.endpoint = apiConfig.api.booking.endpoint;
     this.error = null;
   }
 
