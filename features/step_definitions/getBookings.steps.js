@@ -2,6 +2,7 @@ const { Given, When, Then, setWorldConstructor } = require('@cucumber/cucumber')
 const { expect } = require('chai');
 const ApiWorld = require('../support/world');
 const { booking } = require('../../models/dataSchemas');
+const { BookingRequestBuilder } = require('../../models/requestBuilders');
 require('./commonSteps');
 
 setWorldConstructor(ApiWorld);
@@ -31,16 +32,13 @@ Given('I have a {string} date', function(date) {
 
 // When steps - Make the request
 When('I send a GET request for bookings', async function() {
-  // Build query parameters only for non-undefined values
-  const params = [];
-  if (this.userId !== undefined) {
-    params.push(`userId=${this.userId}`);
-  }
-  if (this.bookingDate !== undefined) {
-    params.push(`date=${this.bookingDate}`);
-  }
+  // Build query parameters using builder
+  const builder = new BookingRequestBuilder()
+    .filterByUserId(this.userId)
+    .filterByDate(this.bookingDate);
   
-  const path = params.length > 0 ? `${this.endpoints.booking.list}?${params.join('&')}` : this.endpoints.booking.list;
+  const request = builder.build();
+  const path = `${this.endpoints.booking.list}${request.queryString}`;
   
   // Store the filters for later validation
   this.requestFilters = {

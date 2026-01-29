@@ -2,6 +2,7 @@ const { Given, When, Then, setWorldConstructor } = require('@cucumber/cucumber')
 const { expect } = require('chai');
 const ApiWorld = require('../support/world');
 const { user } = require('../../models/dataSchemas');
+const { UserRequestBuilder } = require('../../models/requestBuilders');
 require('./commonSteps');
 
 setWorldConstructor(ApiWorld);
@@ -9,23 +10,33 @@ setWorldConstructor(ApiWorld);
 // Constants for validation
 const USER_KEYS = user.keys;
 
-// Helper function to generate unique email
-function generateEmail() {
-  const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 10000);
-  return `test.user.${timestamp}.${random}@example.com`;
-}
-
 // Given steps - Setup user data
 Given('I prepare a user request with the following data:', function(dataTable) {
   // Convert table data to user request object
   const rowsHash = dataTable.rowsHash();
   
-  this.userRequest = {
-    name: rowsHash.name === 'undefined' ? undefined : (rowsHash.name === 'empty' ? '' : rowsHash.name),
-    surname: rowsHash.surname === 'undefined' ? undefined : (rowsHash.surname === 'empty' ? '' : rowsHash.surname),
-    email: rowsHash.email === 'generated' ? generateEmail() : (rowsHash.email === 'undefined' ? undefined : (rowsHash.email === 'empty' ? '' : rowsHash.email))
-  };
+  const builder = new UserRequestBuilder()
+    .withContentType();
+  
+  // Handle name field
+  if (rowsHash.name !== 'undefined') {
+    builder.withName(rowsHash.name === 'empty' ? '' : rowsHash.name);
+  }
+  
+  // Handle surname field
+  if (rowsHash.surname !== 'undefined') {
+    builder.withSurname(rowsHash.surname === 'empty' ? '' : rowsHash.surname);
+  }
+  
+  // Handle email field
+  if (rowsHash.email === 'generated') {
+    builder.withGeneratedEmail();
+  } else if (rowsHash.email !== 'undefined') {
+    builder.withEmail(rowsHash.email === 'empty' ? '' : rowsHash.email);
+  }
+  
+  const request = builder.build();
+  this.userRequest = request.body;
 });
 
 When('I prepare a user request with the same email:', function(dataTable) {
@@ -33,11 +44,14 @@ When('I prepare a user request with the same email:', function(dataTable) {
   const previousEmail = this.userRequest.email;
   const rowsHash = dataTable.rowsHash();
   
-  this.userRequest = {
-    name: rowsHash.name,
-    surname: rowsHash.surname,
-    email: previousEmail
-  };
+  const builder = new UserRequestBuilder()
+    .withContentType()
+    .withName(rowsHash.name)
+    .withSurname(rowsHash.surname)
+    .withEmail(previousEmail);
+  
+  const request = builder.build();
+  this.userRequest = request.body;
 });
 
 // When steps - Make POST request
