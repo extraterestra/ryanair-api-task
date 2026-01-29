@@ -147,8 +147,6 @@ ryanair-api-tau/
 │       └── world.js          # Test context and setup
 ├── models/
 │   └── dataSchemas.js        # Data schemas for validation
-├── specs/
-│   └── bookingSpec.js        # Mocha test specs
 ├── utils/
 │   ├── curlGenerator.js      # Generate cURL commands for debugging
 │   └── logger.js             # Logging utilities
