@@ -2,6 +2,7 @@ const { Given, When, Then, setWorldConstructor, Before } = require('@cucumber/cu
 const { expect } = require('chai');
 const ApiWorld = require('../support/world');
 const { booking } = require('../../models/dataSchemas');
+const { BookingRequestBuilder } = require('../../models/requestBuilders');
 require('./commonSteps');
 
 setWorldConstructor(ApiWorld);
@@ -18,18 +19,40 @@ Given('I prepare a booking request with the following data:', function(dataTable
   // Convert table data to booking request object
   const rowsHash = dataTable.rowsHash();
   
-  this.bookingRequest = {
-    date: rowsHash.date === 'undefined' ? undefined : rowsHash.date,
-    destination: rowsHash.destination === 'undefined' ? undefined : (rowsHash.destination === 'empty' ? '' : rowsHash.destination),
-    origin: rowsHash.origin === 'undefined' ? undefined : (rowsHash.origin === 'empty' ? '' : rowsHash.origin),
-    userId: (function(v){
-      if (v === 'undefined') return undefined;
-      if (v === 'empty') return '';
-      if (v === 'invalid') return 'invalid';
-      const n = parseInt(v, 10);
-      return Number.isNaN(n) ? v : n;
-    })(rowsHash.userId)
-  };
+  const builder = new BookingRequestBuilder()
+    .withContentType();
+  
+  // Handle date field
+  if (rowsHash.date !== 'undefined') {
+    builder.withDate(rowsHash.date);
+  }
+  
+  // Handle destination field
+  if (rowsHash.destination !== 'undefined') {
+    builder.withDestination(rowsHash.destination === 'empty' ? '' : rowsHash.destination);
+  }
+  
+  // Handle origin field
+  if (rowsHash.origin !== 'undefined') {
+    builder.withOrigin(rowsHash.origin === 'empty' ? '' : rowsHash.origin);
+  }
+  
+  // Handle userId field
+  if (rowsHash.userId !== 'undefined') {
+    let userId;
+    if (rowsHash.userId === 'empty') {
+      userId = '';
+    } else if (rowsHash.userId === 'invalid') {
+      userId = 'invalid';
+    } else {
+      const parsed = parseInt(rowsHash.userId, 10);
+      userId = Number.isNaN(parsed) ? rowsHash.userId : parsed;
+    }
+    builder.withUserId(userId);
+  }
+  
+  const request = builder.build();
+  this.bookingRequest = request.body;
 });
 
 // When steps - Make POST request
