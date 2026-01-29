@@ -16,9 +16,6 @@ The framework uses Behavior-Driven Development (BDD) with Cucumber.js, allowing 
 - **Cucumber.js** - BDD test framework
 - **Chai** - Assertion library
 - **Axios** - HTTP client for API requests
-- **Mocha** - Alternative test runner
-- **Nock** - HTTP mocking library
-- **Supertest** - HTTP assertion library
 
 ## Prerequisites
 
