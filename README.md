@@ -32,7 +32,7 @@ The framework uses Behavior-Driven Development (BDD) with Cucumber.js, allowing 
 
 ```bash
 git clone <repository-url>
-cd ryanair-api-tau
+cd ryanair-api-task
 ```
 
 ### 2. Install Dependencies
@@ -45,7 +45,6 @@ This will install all required dependencies including:
 - @cucumber/cucumber
 - axios
 - chai
-- mocha
 - and other dependencies listed in package.json
 
 ## Running Tests
@@ -117,10 +116,6 @@ npx cucumber-js features/getUsers.feature
 
 ```bash
 npx cucumber-js features/postUser.feature
-```
-
-```bash
-npx cucumber-js features/getBookings.feature
 ```
 
 ### Run Specific Scenario by Name
