@@ -7,7 +7,7 @@ Feature: Create User
   Scenario: Successfully create a new user and verify it was created
     Given I prepare a user request with the following data:
       | name    | Test              |
-      | surname | User            |
+      | surname | User              |
       | email   | generated         |
     When I send a POST request to create a user
     Then the response status should be "201"
@@ -17,3 +17,22 @@ Feature: Create User
     And I send a GET request for the created user
     Then the response status should be "200"
     And the retrieved user should match the created user data
+
+  @user3 @regression
+  Scenario Outline: Validation of name and surname fields in POST user request
+    Given I prepare a user request with the following data:
+      | name    | <name>    |
+      | surname | <surname> |
+      | email   | generated |
+    When I send a POST request to create a user
+    Then the response status should be "<statusCode>"
+    And the error response fields should correspond to the schema
+    And the response message should contain "<errorMessage>"
+
+    Examples: Invalid name and surname scenarios
+      | name      | surname   | statusCode | errorMessage      |
+      | undefined | Test      | 400        | Validation errors |
+      | empty     | Test      | 400        | Validation errors |
+      | Test      | undefined | 400        | Validation errors |
+      | Test      | empty     | 400        | Validation errors |
+

@@ -59,3 +59,10 @@ Then('the error response fields should correspond to the schema', function() {
     expect(loc.path).to.be.a('string');
   });
 });
+
+Then('the response message should contain {string}', function(expectedMessage) {
+  const responseBody = this.getResponseBody();
+  expect(responseBody).to.have.property('message');
+  expect(responseBody.message).to.be.a('string');
+  expect(responseBody.message).to.include(expectedMessage);
+});
