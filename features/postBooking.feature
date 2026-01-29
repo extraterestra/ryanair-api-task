@@ -1,10 +1,7 @@
-@postb @regression
+@regression @booking
 Feature: Create Booking
-  As a user
-  I want to create a new booking
-  So that I can book a flight
 
-  @post1 @smoke @regression
+  @smoke
   Scenario: Successfully create a new booking and verify it was created
     Given I have a valid user ID "1"
     And I prepare a booking request with the following data:
@@ -21,7 +18,6 @@ Feature: Create Booking
     Then the response status should be "200"
     And the retrieved booking should match the created booking data
 
-  @post2 @regression
   Scenario Outline: Validation of date field in POST booking request
     Given I have a valid user ID "1"
     And I prepare a booking request with the following data:
@@ -42,7 +38,6 @@ Feature: Create Booking
       # this test case failing, I suppose it is bug, system allows to create booking in the past
       # | 1970-03-15   | 400        | Validation errors | 
 
-    @post3 @regression
     Scenario Outline: Validation of destination field in POST booking request
       Given I have a valid user ID "1"
       And I prepare a booking request with the following data:
@@ -61,7 +56,6 @@ Feature: Create Booking
         | empty       | 400        | Validation errors | 
         | invalid     | 400        | Validation errors | 
 
-    @post4 @regression
     Scenario Outline: Validation of origin field in POST booking request
       Given I have a valid user ID "1"
       And I prepare a booking request with the following data:
@@ -80,7 +74,6 @@ Feature: Create Booking
         | empty       | 400        | Validation errors | 
         | invalid     | 400        | Validation errors | 
 
-    @post5 @regression
     Scenario Outline: Validation of userId field in POST booking request
       Given I have a valid user ID "1"
       And I prepare a booking request with the following data:

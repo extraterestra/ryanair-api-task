@@ -1,10 +1,7 @@
 @regression @user
 Feature: Get User by ID
-  As a user
-  I want to retrieve user information by user ID
-  So that I can view user details
 
-  @user6 @smoke @regression
+  @smoke
   Scenario: Successfully retrieve an existing user
     Given I have the user ID "1"
     When I send a GET request for the user
@@ -12,9 +9,7 @@ Feature: Get User by ID
     And user response fields should correspond to the schema
     And the user response should contain valid data
 
-  @user7 @regression
   Scenario Outline: Error handling for invalid user IDs
-    # Given I have an <userID> user ID type
     Given I have a "<userID>" user ID
     When I send a GET request for the user
     Then the response status should be "<statusCode>"

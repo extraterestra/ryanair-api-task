@@ -1,17 +1,13 @@
-@book @regression
+@regression @booking
 Feature: Get Booking by ID
-  As a user
-  I want to retrieve booking information by booking ID
-  So that I can view my booking details
 
-  @book1 @smoke @regression
+  @smoke
   Scenario: Successfully retrieve an existing booking
     Given I have a valid booking ID "1"
     When I send a GET request for the booking
     Then the response status should be "200"
     And booking response fields should correspond to the schema
 
-  @book2 @regression
   Scenario Outline: Error handling for invalid booking IDs
     Given I have a <bookingID> booking ID
     When I send a GET request for the booking

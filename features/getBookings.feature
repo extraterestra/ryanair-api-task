@@ -1,10 +1,7 @@
-@books @regression
+@regression @booking
 Feature: Get Bookings by User ID and Date
-  As a user
-  I want to retrieve a list of bookings with optional filters by user ID and date
-  So that I can view my bookings with or without specific filters
 
-  @book3 @regression
+  @smoke
   Scenario Outline: Successfully retrieve bookings with optional filters
     Given I have a "<userID>" user ID
     And I have a "<date>" date
@@ -21,7 +18,6 @@ Feature: Get Bookings by User ID and Date
       | undefined | undefined    |
       | 1         | 2027-02-01   |
 
-  @regression @book4
   Scenario Outline: Error handling for invalid booking retrieval requests
     Given I have a "<userID>" user ID
     And I have a "<date>" date

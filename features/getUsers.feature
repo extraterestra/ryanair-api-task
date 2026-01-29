@@ -1,10 +1,7 @@
-@user1 @regression
+@regression @user
 Feature: Get All Users
-  As a user
-  I want to retrieve a list of all users
-  So that I can view all registered users in the system
 
-  @regression
+  @smoke
   Scenario Outline: Successfully retrieve users
     When I send a GET request for all users
     Then the response status should be "<statusCode>"

@@ -1,10 +1,7 @@
-@postu @regression
+@regression @user
 Feature: Create User
-  As an admin
-  I want to create a new user
-  So that I can register users
 
-  @user2 @smoke @regression
+  @smoke
   Scenario: Successfully create a new user and verify it was created
     Given I prepare a user request with the following data:
       | name    | Test              |
@@ -19,7 +16,6 @@ Feature: Create User
     Then the response status should be "200"
     And the retrieved user should match the created user data
 
-  @user3 @regression
   Scenario Outline: Validation of name and surname fields in POST user request
     Given I prepare a user request with the following data:
       | name    | <name>    |
@@ -37,7 +33,6 @@ Feature: Create User
       | Test      | undefined | 400        | Validation errors |
       | Test      | empty     | 400        | Validation errors |
 
-  @user4 @regression
   Scenario Outline: Validation of email field in POST user request with empty and undefined values
     Given I prepare a user request with the following data:
       | name    | Test    |
@@ -54,7 +49,6 @@ Feature: Create User
       # this test is failing due to the bug (201 or 409 code returned instead of 400)
       # | empty        | 400        | Validation errors |    
 
-  @user5 @regression
   Scenario: Validation of duplicate email in POST user request
     Given I prepare a user request with the following data:
       | name    | Test      |
