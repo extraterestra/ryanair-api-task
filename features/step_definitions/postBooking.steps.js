@@ -20,9 +20,15 @@ Given('I prepare a booking request with the following data:', function(dataTable
   
   this.bookingRequest = {
     date: rowsHash.date === 'undefined' ? undefined : rowsHash.date,
-    destination: rowsHash.destination,
-    origin: rowsHash.origin,
-    userId: parseInt(rowsHash.userId, 10)
+    destination: rowsHash.destination === 'undefined' ? undefined : (rowsHash.destination === 'empty' ? '' : rowsHash.destination),
+    origin: rowsHash.origin === 'undefined' ? undefined : (rowsHash.origin === 'empty' ? '' : rowsHash.origin),
+    userId: (function(v){
+      if (v === 'undefined') return undefined;
+      if (v === 'empty') return '';
+      if (v === 'invalid') return 'invalid';
+      const n = parseInt(v, 10);
+      return Number.isNaN(n) ? v : n;
+    })(rowsHash.userId)
   };
 });
 

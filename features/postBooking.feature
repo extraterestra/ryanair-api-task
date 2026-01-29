@@ -39,3 +39,60 @@ Feature: Create Booking
       | invalid-date | 400        | Validation errors | 
       | 2026-13-45   | 400        | Validation errors | 
       # | 1976-03-15   | 400        | Validation errors | this test case failing, I suppose it is bug
+
+    @post3 @regression
+    Scenario Outline: Validation of destination field in POST booking request
+      Given I have a valid user ID "1"
+      And I prepare a booking request with the following data:
+        | date        | 2026-03-15    |
+        | destination | <destination> |
+        | origin      | DUB           |
+        | userId      | 1             |
+      When I send a POST request to create a booking
+      Then the response status should be "<statusCode>"
+      And the error response fields should correspond to the schema
+      And the response message should contain "<errorMessage>"
+
+      Examples: Invalid destination scenarios
+        | destination | statusCode | errorMessage      | 
+        | undefined   | 400        | Validation errors | 
+        | empty       | 400        | Validation errors | 
+        | invalid     | 400        | Validation errors | 
+
+    @post4 @regression
+    Scenario Outline: Validation of origin field in POST booking request
+      Given I have a valid user ID "1"
+      And I prepare a booking request with the following data:
+        | date        | 2026-03-15    |
+        | destination | FCO           |
+        | origin      | <origin>      |
+        | userId      | 1             |
+      When I send a POST request to create a booking
+      Then the response status should be "<statusCode>"
+      And the error response fields should correspond to the schema
+      And the response message should contain "<errorMessage>"
+
+      Examples: Invalid origin scenarios
+        | origin      | statusCode | errorMessage      | 
+        | undefined   | 400        | Validation errors | 
+        | empty       | 400        | Validation errors | 
+        | invalid     | 400        | Validation errors | 
+
+    @post5 @regression
+    Scenario Outline: Validation of userId field in POST booking request
+      Given I have a valid user ID "1"
+      And I prepare a booking request with the following data:
+        | date        | 2026-03-15    |
+        | destination | FCO           |
+        | origin      | DUB           |
+        | userId      | <userId>      |
+      When I send a POST request to create a booking
+      Then the response status should be "<statusCode>"
+      And the error response fields should correspond to the schema
+      And the response message should contain "<errorMessage>"
+
+      Examples: Invalid userId scenarios
+        | userId  | statusCode | errorMessage      |
+        | undefined | 400      | Validation errors |
+        | invalid   | 400      | Validation errors |
+        | 99999     | 404      | No user with id   |        

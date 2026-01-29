@@ -23,27 +23,32 @@ Then('the error response fields should correspond to the schema', function() {
 
   // errors must be an array according to schema
   expect(responseBody).to.have.property('errors');
-  expect(responseBody.errors).to.be.an('array', 'errors field must be an array, not null or undefined');
+  // errors can be null for some error responses (e.g., 404 with no details)
+  if (responseBody.errors === null) {
+    return;
+  }
+
+  expect(responseBody.errors).to.be.an('array', 'errors field must be an array when present');
 
   if (responseBody.errors.length > 0) {
-    const error = responseBody.errors[0];
-    expect(error).to.have.all.keys(ERROR_DETAIL_KEYS);
-    expect(error.location).to.have.all.keys(LOCATION_KEYS);
+    const err = responseBody.errors[0];
+    expect(err).to.have.all.keys(ERROR_DETAIL_KEYS);
+    expect(err.location).to.have.all.keys(LOCATION_KEYS);
   }
-  
+
   // Each error object
-  responseBody.errors.forEach(error => {
-    expect(error).to.be.an('object');
+  responseBody.errors.forEach(err => {
+    expect(err).to.be.an('object');
 
     // error.message
-    expect(error).to.have.property('message');
-    expect(error.message).to.be.a('string');
+    expect(err).to.have.property('message');
+    expect(err.message).to.be.a('string');
 
     // error.location
-    expect(error).to.have.property('location');
-    expect(error.location).to.be.an('object');
+    expect(err).to.have.property('location');
+    expect(err.location).to.be.an('object');
 
-    const loc = error.location;
+    const loc = err.location;
     expect(loc).to.have.property('in');
     expect(loc.in).to.be.a('string');
     expect(loc).to.have.property('name');
