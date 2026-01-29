@@ -26,7 +26,7 @@ Given('I have an? {word} user ID type', function(userIDType) {
 
 // When steps - Make the request
 When('I send a GET request for the user', async function() {
-  await this.makeRequest('GET', `/user/${this.userId}`);
+  await this.makeRequest('GET', this.endpoints.user.getById(this.userId));
 });
 
 // Then steps - Assert response structure

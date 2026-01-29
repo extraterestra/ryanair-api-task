@@ -34,7 +34,7 @@ Given('I prepare a booking request with the following data:', function(dataTable
 
 // When steps - Make POST request
 When('I send a POST request to create a booking', async function() {
-  await this.makeRequest('POST', '/booking', this.bookingRequest);
+  await this.makeRequest('POST', this.endpoints.booking.create, this.bookingRequest);
 });
 
 // When step - Retrieve booking ID and fetch the created booking
@@ -50,7 +50,7 @@ When('I retrieve the booking ID from the response', function() {
 
 When('I send a GET request for the created booking', async function() {
   expect(this.createdBookingId).to.exist;
-  await this.makeRequest('GET', `/booking/${this.createdBookingId}`);
+  await this.makeRequest('GET', this.endpoints.booking.getById(this.createdBookingId));
 });
 
 // Then steps - Response validation

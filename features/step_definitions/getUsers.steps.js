@@ -12,7 +12,7 @@ const USER_KEYS = user.keys;
 // When steps - Make the request
 When('I send a GET request for all users', async function() {
   // Make GET request to retrieve all users
-  await this.makeRequest('GET', '/user');
+  await this.makeRequest('GET', this.endpoints.user.list);
 });
 
 // Then steps - Validate response

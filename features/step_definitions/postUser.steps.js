@@ -42,7 +42,7 @@ When('I prepare a user request with the same email:', function(dataTable) {
 
 // When steps - Make POST request
 When('I send a POST request to create a user', async function() {
-  await this.makeRequest('POST', '/user', this.userRequest);
+  await this.makeRequest('POST', this.endpoints.user.create, this.userRequest);
 });
 
 // When step - Retrieve user ID and fetch the created user
@@ -58,7 +58,7 @@ When('I retrieve the user ID from the response', function() {
 
 When('I send a GET request for the created user', async function() {
   expect(this.createdUserId).to.exist;
-  await this.makeRequest('GET', `/user/${this.createdUserId}`);
+  await this.makeRequest('GET', this.endpoints.user.getById(this.createdUserId));
 });
 
 // Then steps - Response validation

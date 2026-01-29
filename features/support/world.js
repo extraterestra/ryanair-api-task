@@ -10,6 +10,7 @@ class ApiWorld extends World {
     this.response = null;
     this.bookingId = null;
     this.baseUrl = apiConfig.api.baseUrl;
+    this.endpoints = apiConfig.api.endpoints;
     this.error = null;
   }
 
