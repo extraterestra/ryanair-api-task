@@ -6,5 +6,8 @@ module.exports = {
   },
   booking: {
     keys: ['id', 'date', 'destination', 'origin', 'userId']
+  },
+  user: {
+    keys: ['id', 'name', 'surname', 'email']
   }
 };

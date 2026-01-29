@@ -10,13 +10,12 @@ class ApiWorld extends World {
     this.response = null;
     this.bookingId = null;
     this.baseUrl = apiConfig.api.baseUrl;
-    this.endpoint = apiConfig.api.booking.endpoint;
     this.error = null;
   }
 
   async makeRequest(method, path, body = null) {
     try {
-      const url = `${this.baseUrl}${this.endpoint}${path}`;
+      const url = `${this.baseUrl}${path}`;
       const headers = {
         'Accept': 'application/json',
       };

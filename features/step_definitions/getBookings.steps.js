@@ -78,10 +78,6 @@ Then('list of bookings response fields should correspond to the schema', functio
 // Shared error validation (from commonSteps.js)
 // Then('the error response fields should correspond to the schema', ...);
 
-Then('the response message should contain {string}', function(messageContent) {
-  const responseBody = this.getResponseBody();
-  expect(responseBody.message).to.include(messageContent);
-});
 Then('the bookings should match the applied filters', function() {
   const responseBody = this.getResponseBody();
   const filters = this.requestFilters;

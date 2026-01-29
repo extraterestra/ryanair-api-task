@@ -9,8 +9,6 @@ setWorldConstructor(ApiWorld);
 // Constants for validation
 const BOOKING_KEYS = booking.keys;
 
-// Background steps - no longer needed as config handles initialization
-
 // Given steps - Setup booking ID
 Given('I have a valid booking ID {string}', function(id) {
   this.bookingId = id;

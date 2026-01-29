@@ -5,6 +5,11 @@ module.exports = {
       endpoint: '/booking',
       getById: '/booking',
       getList: '/booking'
+    },
+    user: {
+      endpoint: '/user',
+      getById: '/user',
+      getList: '/user'
     }
   }
 };
