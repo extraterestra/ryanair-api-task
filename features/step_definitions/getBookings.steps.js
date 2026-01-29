@@ -40,7 +40,7 @@ When('I send a GET request for bookings', async function() {
     params.push(`date=${this.bookingDate}`);
   }
   
-  const path = params.length > 0 ? `?${params.join('&')}` : '';
+  const path = params.length > 0 ? `/booking?${params.join('&')}` : '/booking';
   
   // Store the filters for later validation
   this.requestFilters = {

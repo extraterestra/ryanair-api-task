@@ -28,6 +28,18 @@ Given('I prepare a user request with the following data:', function(dataTable) {
   };
 });
 
+When('I prepare a user request with the same email:', function(dataTable) {
+  // Prepare a new user request with the same email as the previous request
+  const previousEmail = this.userRequest.email;
+  const rowsHash = dataTable.rowsHash();
+  
+  this.userRequest = {
+    name: rowsHash.name,
+    surname: rowsHash.surname,
+    email: previousEmail
+  };
+});
+
 // When steps - Make POST request
 When('I send a POST request to create a user', async function() {
   await this.makeRequest('POST', '/user', this.userRequest);

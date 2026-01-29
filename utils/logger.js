@@ -1,7 +1,7 @@
 class Logger {
   logRequest(method, url, headers = {}, body = null) {
     console.log('\n' + '='.repeat(80));
-    console.log('📤 REQUEST');
+    console.log('REQUEST');
     console.log('='.repeat(80));
     console.log(`Method: ${method}`);
     console.log(`URL: ${url}`);
@@ -25,7 +25,7 @@ class Logger {
 
   logResponse(status, headers = {}, body = null) {
     console.log('\n' + '='.repeat(80));
-    console.log('📥 RESPONSE');
+    console.log('RESPONSE');
     console.log('='.repeat(80));
     console.log(`Status: ${status}`);
     if (Object.keys(headers).length > 0) {
@@ -42,7 +42,7 @@ class Logger {
   }
 
   logError(error) {
-    console.log('\n' + '❌ ERROR'.red);
+    console.log('\n' + 'ERROR'.red);
     console.log('='.repeat(80));
     console.log(error.message);
     if (error.response) {

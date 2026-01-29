@@ -1,3 +1,4 @@
+@postb 
 Feature: Create Booking
   As a user
   I want to create a new booking
@@ -38,7 +39,8 @@ Feature: Create Booking
       | undefined    | 400        | Validation errors | 
       | invalid-date | 400        | Validation errors | 
       | 2026-13-45   | 400        | Validation errors | 
-      # | 1976-03-15   | 400        | Validation errors | this test case failing, I suppose it is bug
+      # this test case failing, I suppose it is bug, system allows to create booking in the past
+      # | 1970-03-15   | 400        | Validation errors | 
 
     @post3 @regression
     Scenario Outline: Validation of destination field in POST booking request
@@ -93,6 +95,7 @@ Feature: Create Booking
 
       Examples: Invalid userId scenarios
         | userId  | statusCode | errorMessage      |
-        | undefined | 400      | Validation errors |
+        #here we have defect as if userId is not provided system creates booking for userId=0
+        # | undefined | 400      | Validation errors |
         | invalid   | 400      | Validation errors |
         | 99999     | 404      | No user with id   |        

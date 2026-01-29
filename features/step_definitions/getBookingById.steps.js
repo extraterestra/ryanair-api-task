@@ -32,7 +32,7 @@ Given('I have a {word} booking ID', function(bookingIDType) {
 
 // When steps - Make the request
 When('I send a GET request for the booking', async function() {
-  await this.makeRequest('GET', `/${this.bookingId}`);
+  await this.makeRequest('GET', `/booking/${this.bookingId}`);
 });
 
 // Then steps - Assert response status
