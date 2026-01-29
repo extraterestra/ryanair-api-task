@@ -1,4 +1,4 @@
-@user1
+@user1 @regression
 Feature: Get All Users
   As a user
   I want to retrieve a list of all users

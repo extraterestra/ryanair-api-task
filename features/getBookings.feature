@@ -1,4 +1,4 @@
-@books
+@books @regression
 Feature: Get Bookings by User ID and Date
   As a user
   I want to retrieve a list of bookings with optional filters by user ID and date

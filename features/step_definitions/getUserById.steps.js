@@ -14,6 +14,16 @@ Given('I have the user ID {string}', function(id) {
   this.userId = id;
 });
 
+Given('I have an? {word} user ID type', function(userIDType) {
+  if (userIDType === 'undefined') {
+    this.userId = undefined;
+  } else if (userIDType === 'empty') {
+    this.userId = '';
+  } else if (userIDType === 'non-existing') {
+    this.userId = '99999';
+  }
+});
+
 // When steps - Make the request
 When('I send a GET request for the user', async function() {
   await this.makeRequest('GET', `/user/${this.userId}`);
@@ -44,4 +54,10 @@ Then('the user response should contain valid data', function() {
   
   // Basic email format validation
   expect(responseBody.email).to.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+});
+
+Then('the response message should be {string} with user ID {string}', function(messagePrefix, userId) {
+  const responseBody = this.getResponseBody();
+  const expectedMessage = userId ? `${messagePrefix} ${userId}` : messagePrefix;
+  expect(responseBody.message).to.equal(expectedMessage);
 });

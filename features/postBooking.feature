@@ -1,4 +1,4 @@
-@postb 
+@postb @regression
 Feature: Create Booking
   As a user
   I want to create a new booking

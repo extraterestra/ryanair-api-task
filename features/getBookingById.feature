@@ -1,4 +1,4 @@
-@book
+@book @regression
 Feature: Get Booking by ID
   As a user
   I want to retrieve booking information by booking ID
