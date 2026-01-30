@@ -30,6 +30,6 @@ Feature: Get Bookings by User ID and Date
       | userID    | date         | statusCode | 
       # this test case failing due to the bug, system returns 200 instead of 400
       # | invalid   | 2022-01-01   | 400        |   
-      # this test case failing due to the bug, system returns 200 instead of 400 
+      # this test case failing due to the bug, system returns 200 instead of 404 
       # | 99999    | 2024-01-01   | 404        | 
       | 1         | invalid-date | 400        | 
