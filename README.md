@@ -215,7 +215,17 @@ This approach follows **DRY** (Don't Repeat Yourself) and **SOLID** principles, 
 ## Configuration
 
 API configuration can be modified in:
-- `config/apiConfig.js` - Base URL, timeouts, and other settings
+- `config/apiConfig.js` - Base URL, path parameters, splitting on different evs, etc
+
+## Logging & Debugging
+
+The framework includes built-in logging utilities (`utils/logger.js`) that automatically capture:
+- **Request Details**: Method, URL, headers, and body
+- **cURL Commands**: Copy-paste ready commands for debugging
+- **Response Data**: Status, headers, and response body
+- **Error Information**: Detailed error messages and stack traces
+
+All API calls are automatically logged to the console during test execution, making it easy to debug failures and understand the exact requests being made.
 
 ## Troubleshooting
 
