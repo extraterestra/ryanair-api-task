@@ -44,6 +44,67 @@ This will install all required dependencies including:
 - chai
 - and other dependencies listed in package.json
 
+## Project Structure
+
+```
+ryanair-api-tau/
+├── config/
+│   └── apiConfig.js          # API configuration and base URLs
+├── features/
+│   ├── *.feature             # Gherkin feature files
+│   ├── step_definitions/     # Step implementations
+│   │   ├── commonSteps.js    # Shared step definitions
+│   │   ├── getUsers.steps.js
+│   │   ├── postUser.steps.js
+│   │   └── ...
+│   └── support/
+│       └── world.js          # Test context and setup
+├── models/
+│   └── dataSchemas.js        # Data schemas for validation
+├── utils/
+│   ├── curlGenerator.js      # Generate cURL commands for debugging
+│   └── logger.js             # Logging utilities
+├── cucumber.js               # Cucumber configuration
+├── package.json              # Dependencies and scripts
+└── cucumber-report.html      # Generated test report
+```
+
+## Framework Design Patterns
+
+This framework uses three key design patterns for maintainability and scalability:
+
+### Configuration Pattern (`config/apiConfig.js`)
+Centralizes all API settings in one place:
+- **Purpose**: Single source of truth for URLs and endpoints
+- **Benefit**: Change environment settings once, affects entire project
+- **Usage**: `this.endpoints.user.create` instead of hardcoded URLs
+
+### Schema Definition Pattern (`models/dataSchemas.js`)
+Defines expected API response structures:
+- **Purpose**: Consistent response validation across all tests
+- **Benefit**: Update schema once when API changes
+- **Usage**: `expect(response).to.have.all.keys(...user.keys)`
+
+### Builder Pattern (`models/requestBuilders.js`)
+Constructs complex request objects with fluent interface:
+- **Purpose**: Build requests step-by-step with readable code
+- **Benefit**: Flexible request creation, handles transformations (e.g., email generation)
+- **Usage**: 
+  ```javascript
+  new UserRequestBuilder()
+    .withName('John')
+    .withSurname('Doe')
+    .withGeneratedEmail()
+    .build();
+  ```
+
+**How They Work Together:**
+1. **Builder** creates request data
+2. **Configuration** provides endpoint paths
+3. **Schema** validates responses
+
+This approach follows **DRY** (Don't Repeat Yourself) and **SOLID** principles, making the framework easy to maintain and extend.
+
 ## Running Tests
 
 ### Run All Tests
@@ -151,67 +212,6 @@ After running tests, an HTML report is automatically generated:
 - **Location**: `cucumber-report.html` (root directory)
 - **Open**: Simply open the file in your browser to view detailed test results
 
-## Project Structure
-
-```
-ryanair-api-tau/
-├── config/
-│   └── apiConfig.js          # API configuration and base URLs
-├── features/
-│   ├── *.feature             # Gherkin feature files
-│   ├── step_definitions/     # Step implementations
-│   │   ├── commonSteps.js    # Shared step definitions
-│   │   ├── getUsers.steps.js
-│   │   ├── postUser.steps.js
-│   │   └── ...
-│   └── support/
-│       └── world.js          # Test context and setup
-├── models/
-│   └── dataSchemas.js        # Data schemas for validation
-├── utils/
-│   ├── curlGenerator.js      # Generate cURL commands for debugging
-│   └── logger.js             # Logging utilities
-├── cucumber.js               # Cucumber configuration
-├── package.json              # Dependencies and scripts
-└── cucumber-report.html      # Generated test report
-```
-
-## Framework Design Patterns
-
-This framework uses three key design patterns for maintainability and scalability:
-
-### Configuration Pattern (`config/apiConfig.js`)
-Centralizes all API settings in one place:
-- **Purpose**: Single source of truth for URLs and endpoints
-- **Benefit**: Change environment settings once, affects entire project
-- **Usage**: `this.endpoints.user.create` instead of hardcoded URLs
-
-### Schema Definition Pattern (`models/dataSchemas.js`)
-Defines expected API response structures:
-- **Purpose**: Consistent response validation across all tests
-- **Benefit**: Update schema once when API changes
-- **Usage**: `expect(response).to.have.all.keys(...user.keys)`
-
-### Builder Pattern (`models/requestBuilders.js`)
-Constructs complex request objects with fluent interface:
-- **Purpose**: Build requests step-by-step with readable code
-- **Benefit**: Flexible request creation, handles transformations (e.g., email generation)
-- **Usage**: 
-  ```javascript
-  new UserRequestBuilder()
-    .withName('John')
-    .withSurname('Doe')
-    .withGeneratedEmail()
-    .build();
-  ```
-
-**How They Work Together:**
-1. **Builder** creates request data
-2. **Configuration** provides endpoint paths
-3. **Schema** validates responses
-
-This approach follows **DRY** (Don't Repeat Yourself) and **SOLID** principles, making the framework easy to maintain and extend.
-
 ## Logging & Debugging
 
 The framework includes built-in logging utilities (`utils/logger.js`) that automatically capture:
@@ -232,4 +232,3 @@ All API calls are automatically logged to the console during test execution, mak
 ### Report Not Generated
 - Check file permissions in the project directory
 - Ensure tests complete without crashing
-
