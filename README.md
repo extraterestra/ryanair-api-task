@@ -155,6 +155,42 @@ ryanair-api-tau/
 └── cucumber-report.html      # Generated test report
 ```
 
+## Framework Design Patterns
+
+This framework uses three key design patterns for maintainability and scalability:
+
+### Configuration Pattern (`config/apiConfig.js`)
+Centralizes all API settings in one place:
+- **Purpose**: Single source of truth for URLs and endpoints
+- **Benefit**: Change environment settings once, affects entire project
+- **Usage**: `this.endpoints.user.create` instead of hardcoded URLs
+
+### Schema Definition Pattern (`models/dataSchemas.js`)
+Defines expected API response structures:
+- **Purpose**: Consistent response validation across all tests
+- **Benefit**: Update schema once when API changes
+- **Usage**: `expect(response).to.have.all.keys(...user.keys)`
+
+### Builder Pattern (`models/requestBuilders.js`)
+Constructs complex request objects with fluent interface:
+- **Purpose**: Build requests step-by-step with readable code
+- **Benefit**: Flexible request creation, handles transformations (e.g., email generation)
+- **Usage**: 
+  ```javascript
+  new UserRequestBuilder()
+    .withName('John')
+    .withSurname('Doe')
+    .withGeneratedEmail()
+    .build();
+  ```
+
+**How They Work Together:**
+1. **Builder** creates request data
+2. **Configuration** provides endpoint paths
+3. **Schema** validates responses
+
+This approach follows **DRY** (Don't Repeat Yourself) and **SOLID** principles, making the framework easy to maintain and extend.
+
 ## Available Test Tags
 
 - `@smoke` - Critical path tests
@@ -192,17 +228,3 @@ API configuration can be modified in:
 - Check file permissions in the project directory
 - Ensure tests complete without crashing
 
-### Step Definition Conflicts
-- Each step pattern must be unique
-- Check `features/step_definitions/` for duplicate patterns
-
-## Contributing
-
-1. Create a feature branch
-2. Write tests following BDD principles
-3. Ensure all tests pass
-4. Submit a pull request
-
-## Support
-
-For issues or questions, please create an issue in the repository.
