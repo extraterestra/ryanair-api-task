@@ -123,6 +123,27 @@ Run scenarios matching a specific name pattern:
 npx cucumber-js --name "Successfully retrieve"
 ```
 
+## Available Test Tags
+
+- `@smoke` - Critical path tests
+- `@regression` - Full regression suite
+- `@user` - User management tests
+- `@booking` - Booking management tests
+
+## Example Test Scenarios
+
+### User Management
+- Create new users
+- Retrieve user by ID
+- List all users
+- Handle invalid user IDs
+
+### Booking Management
+- Create new bookings
+- Retrieve booking by ID
+- List bookings with filters (userID, date)
+- Handle invalid booking requests
+
 ## Test Reports
 
 After running tests, an HTML report is automatically generated:
@@ -190,32 +211,6 @@ Constructs complex request objects with fluent interface:
 3. **Schema** validates responses
 
 This approach follows **DRY** (Don't Repeat Yourself) and **SOLID** principles, making the framework easy to maintain and extend.
-
-## Available Test Tags
-
-- `@smoke` - Critical path tests
-- `@regression` - Full regression suite
-- `@user` - User management tests
-- `@booking` - Booking management tests
-
-## Example Test Scenarios
-
-### User Management
-- Create new users
-- Retrieve user by ID
-- List all users
-- Handle invalid user IDs
-
-### Booking Management
-- Create new bookings
-- Retrieve booking by ID
-- List bookings with filters (userID, date)
-- Handle invalid booking requests
-
-## Configuration
-
-API configuration can be modified in:
-- `config/apiConfig.js` - Base URL, path parameters, splitting on different evs, etc
 
 ## Logging & Debugging
 
